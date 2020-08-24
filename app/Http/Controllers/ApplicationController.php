@@ -74,4 +74,43 @@ class ApplicationController extends Controller
         return back()->with('mensaje', 'La aplicacion fue borrada exitosamente!!');
     }
 
+     public function editApplication($id){
+        $app = App\Application::findOrFail($id);
+        $user_id = \Auth::user()->id;
+        $user= App\User::where('id', $user_id)->get();
+        $user_role = $user[0]->role;
+        if($user_role != 'Desarrollador') {
+            return redirect()->route('index');
+        }
+        if(\Auth::user()->id == $app->user_id){
+            return view('editApplication', compact('app'));   
+        }
+        else{
+            return redirect()->route('index');
+        }
+    }
+
+    public function updateApp(Request $request, $id){
+        $request->validate([
+                'price'=> 'required'
+            ]);
+        $app = App\Application::findOrFail($id);
+        $app->name = $request->name;
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $photo = $image->getClientOriginalName();
+            $destination = base_path() . '/public/css';
+            $image->move($destination, $photo);
+            $app->image = $photo;
+        }
+        else{
+            $app->image = $request->img;
+        }
+        $app->price = $request->price;
+        $app->category_id = $request->category_id;
+        $app->user_id = $request->user_id;
+        $app->save();
+        return back()->with('mensaje', 'La aplicacion se actualizo exitosamente!');
+    }
+
 }

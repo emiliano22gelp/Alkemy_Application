@@ -28,6 +28,10 @@ Route::get('/me/app/{id}', 'ApplicationController@application_detail')->name('ap
 
 Route::delete('/me/app/{id}', 'ApplicationController@delete_application')->name('delete_application');
 
+Route::get('/me/editApplication/{id}', 'ApplicationController@editApplication')->name('editApplication');
+
+Route::put('/me/editApplication/{id}', 'ApplicationController@updateApp')->name('updateApp');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
