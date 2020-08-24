@@ -26,7 +26,7 @@
       <th scope="row">{{$app->name}}</th>
       <td><img src="{{asset("css/$app->image")}}" width="60" height="40" /></td>
       <td>
-        <a href="#" class="btn btn-primary btn-sm">Ver Detalle</a>
+        <a href="{{ route('application_detail', $app->id) }}" class="btn btn-primary btn-sm">Ver Detalle</a>
       </td>
     </tr>
   @endforeach  

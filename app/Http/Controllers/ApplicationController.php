@@ -61,12 +61,22 @@ class ApplicationController extends Controller
 
     public function application_detail($id){
         $app = App\Application::findOrFail($id);
-        if(\Auth::user()->id == $app->user_id){
-        	return view('app_detail', compact('app'));
+        $user_id = \Auth::user()->id;
+        $user= App\User::where('id', $user_id)->get();
+        $user_role = $user[0]->role;
+        if($user_role == 'Desarrollador') {
+            if(\Auth::user()->id == $app->user_id){
+        	   return view('app_detail', compact('app', 'user_role'));
+            }
+            else{
+        	   return redirect()->route('index');
+            }
         }
         else{
-        	return redirect()->route('index');
-        }
+                $purchase = $this->purchased_application($id);
+                $saved_app = $this->saved_application($id);
+                return view('app_detail', compact('app', 'user_role', 'purchase', 'saved_app'));
+        }    
     }
 
     public function delete_application($id){
@@ -142,5 +152,28 @@ class ApplicationController extends Controller
             return view('category_app', compact('category_name', 'count', 'apps'));
         }
     }
+
+    public function purchased_application($app_id){   //verifica si la aplicacion recibida fue comprada por el usuario logueado
+        $user_id = \Auth::user()->id;
+        $purchase = App\Purchase::where('application_id', $app_id)->where('user_id', $user_id)->count();
+        if($purchase == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public function saved_application($app_id){   //verifica si la aplicacion recibida se encuentra en el carrito del usuario logueado
+        $user_id = \Auth::user()->id;
+        $saved_app = App\Shopping_Cart::where('application_id', $app_id)->where('user_id', $user_id)->count();
+        if($saved_app == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 
 }

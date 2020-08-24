@@ -30,6 +30,20 @@
       <h4>{{ $app->category->name }}</h4> 
   </div>
   </div>
+    @if($user_role == 'Cliente')
+      <br>
+      <div class="text-center">
+        @if($purchase == false && $saved_app == false)
+          <a href="#" class="btn btn-warning">Agregar a mi Carrito</a>
+        @endif
+        @if($saved_app == true)
+            <h3><strong>Ya agregaste esta aplicacion a tu Carrito</strong></h3>
+        @endif
+        @if($purchase == true)
+            <h3><strong>Ya has comprado esta aplicacion</strong></h3>
+        @endif
+      </div>
+    @endif
 </div>
 
 
