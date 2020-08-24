@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App;
 
 class ApplicationController extends Controller
@@ -111,6 +112,35 @@ class ApplicationController extends Controller
         $app->user_id = $request->user_id;
         $app->save();
         return back()->with('mensaje', 'La aplicacion se actualizo exitosamente!');
+    }
+
+    public function allCategories(){
+        $user_id = \Auth::user()->id;
+        $user= App\User::where('id', $user_id)->get();
+        $user_role = $user[0]->role;
+        if($user_role != 'Cliente') {
+            return redirect()->route('index');
+        }
+        else{
+            $categories = DB::table('applications')->select(array('categories.*', DB::raw('COUNT(applications.category_id) as umount')))->rightJoin('categories', 'category_id', '=', 'categories.id')->groupBy('categories.id')->get();
+            return view('allCategories', ['categories' => $categories]);
+        }
+    }
+
+    public function apps($id){
+        $category = App\Category::findOrFail($id); // para verificar que la categoria recibida realmente exista
+        $category_name = $category->name;
+        $user_id = \Auth::user()->id;
+        $user= App\User::where('id', $user_id)->get();
+        $user_role = $user[0]->role;
+        if($user_role != 'Cliente') {
+            return redirect()->route('index');
+        }
+        else{
+            $count = App\Application::where('category_id', $id)->count();
+            $apps = App\Application::where('category_id', $id)->get();
+            return view('category_app', compact('category_name', 'count', 'apps'));
+        }
     }
 
 }

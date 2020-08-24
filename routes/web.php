@@ -32,6 +32,10 @@ Route::get('/me/editApplication/{id}', 'ApplicationController@editApplication')-
 
 Route::put('/me/editApplication/{id}', 'ApplicationController@updateApp')->name('updateApp');
 
+Route::get('/allCategories', 'ApplicationController@allCategories')->name('allCategories');
+
+Route::get('/apps/{id}', 'ApplicationController@apps')->name('apps');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
