@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <link rel="shortcut icon" href="{{asset('css/favicon.jpg')}}" />
 
@@ -113,11 +114,11 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+ <!-- <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>-->
   <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+  <!--<script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>-->
 
   <!-- Custom JavaScript for this theme -->
   <script src="{{asset('js/scrolling-nav.js')}}"></script>

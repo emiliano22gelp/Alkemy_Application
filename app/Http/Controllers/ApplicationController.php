@@ -175,5 +175,28 @@ class ApplicationController extends Controller
         }
     }
 
+    public function save(Request $request){
+        $user_id = \Auth::user()->id;
+        $new_scart = new App\Shopping_Cart;
+        $new_scart->user_id = $user_id;
+        $new_scart->application_id = $request->app_id;
+        $new_scart->save();
+        echo('');
+    }
+
+    public function myShoppingCart(){
+        $user_id = \Auth::user()->id;
+        $user= App\User::where('id', $user_id)->get();
+        $user_role = $user[0]->role;
+        if($user_role != 'Cliente') {
+            return redirect()->route('index');
+        }
+        $count = App\Shopping_Cart::where('user_id', $user_id)->count();
+        $apps = DB::table('shopping__carts')->select(array('applications.*'))->join('applications', 'shopping__carts.application_id', '=', 'applications.id')->where('shopping__carts.user_id', $user_id)->get();
+        return view('myShoppingCart', ['apps' => $apps, 'count' => $count]);
+
+
+    }
+
 
 }

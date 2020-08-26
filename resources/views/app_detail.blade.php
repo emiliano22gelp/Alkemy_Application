@@ -4,6 +4,11 @@
 
 <div class="jumbotron">
 	<div class="text-center">
+    @if (session('mensaje'))
+      <div class="alert alert-success">
+        {{ session('mensaje') }}
+      </div>
+    @endif
    	<div class="form-group">
     <label for="exampleFormControlSelect1">Nombre de la Aplicacion</label> </br>
       <h4>{{ $app->name }}</h4> 
@@ -30,11 +35,12 @@
       <h4>{{ $app->category->name }}</h4> 
   </div>
   </div>
+  <input type="hidden" name="application_id" id="app_id" value="{{ $app->id }}">
     @if($user_role == 'Cliente')
       <br>
       <div class="text-center">
         @if($purchase == false && $saved_app == false)
-          <a href="#" class="btn btn-warning">Agregar a mi Carrito</a>
+            <button id='myajax'>Agregar al Carrito</button>
         @endif
         @if($saved_app == true)
             <h3><strong>Ya agregaste esta aplicacion a tu Carrito</strong></h3>
@@ -45,6 +51,24 @@
       </div>
     @endif
 </div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type = "text/javascript">
+         $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+         $('#myajax').click(function(){
+            $.ajax({
+               url:'api',
+               data:{'app_id':{{ $app->id }}},
+               type:'post',
+               success:  function (response) {
+                  location.reload();
+               },
+            });
+             });
+       </script>
 
 
 @endsection

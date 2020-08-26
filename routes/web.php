@@ -36,6 +36,14 @@ Route::get('/allCategories', 'ApplicationController@allCategories')->name('allCa
 
 Route::get('/apps/{id}', 'ApplicationController@apps')->name('apps');
 
+Route::post('/me/app/api', 'ApplicationController@save');
+
+Route::get('/me/app/api', function(){
+	return redirect()->route('index');
+});
+
+Route::get('/me/myShoppingCart', 'ApplicationController@myShoppingCart')->name('myShoppingCart');
+
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
