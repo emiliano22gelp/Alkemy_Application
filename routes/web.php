@@ -36,13 +36,21 @@ Route::get('/allCategories', 'ApplicationController@allCategories')->name('allCa
 
 Route::get('/apps/{id}', 'ApplicationController@apps')->name('apps');
 
-Route::post('/me/app/api', 'ApplicationController@save');
+Route::post('/me/app/api', 'ApplicationController@save');  // API llamada por ajax para agregar una aplicacion al carrito del usuario
 
-Route::get('/me/app/api', function(){
+Route::get('/me/app/api', function(){   //controla que el cliente no ingrese a la API anterior por GET cuando en realidad es por POST
 	return redirect()->route('index');
 });
 
 Route::get('/me/myShoppingCart', 'ApplicationController@myShoppingCart')->name('myShoppingCart');
+
+Route::post('/me/buy', 'ApplicationController@buy');     // API llamada por ajax para comprar una aplicacion almacenada en el carrito
+
+Route::get('/me/buy', function(){     //controla que el cliente no ingrese a la API anterior por GET cuando en realidad es por POST                 
+	return redirect()->route('index');
+});
+
+
 
 Auth::routes();
 

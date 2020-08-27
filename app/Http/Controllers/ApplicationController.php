@@ -175,7 +175,7 @@ class ApplicationController extends Controller
         }
     }
 
-    public function save(Request $request){
+    public function save(Request $request){       //Agrega la aplicacion recibida por ajax al carrito del usuario
         $user_id = \Auth::user()->id;
         $new_scart = new App\Shopping_Cart;
         $new_scart->user_id = $user_id;
@@ -196,6 +196,16 @@ class ApplicationController extends Controller
         return view('myShoppingCart', ['apps' => $apps, 'count' => $count]);
 
 
+    }
+
+    public function buy(Request $request){        //Compra la aplicacion recibida por ajax y la borra del carrito
+        $user_id = \Auth::user()->id;
+        $new_purchase = new App\Purchase;
+        $new_purchase->user_id = $user_id;
+        $new_purchase->application_id = $request->app_id;
+        $new_purchase->save();
+        DB::table('shopping__carts')->where('user_id', $user_id)->where('application_id', $request->app_id)->delete();
+        echo('');
     }
 
 

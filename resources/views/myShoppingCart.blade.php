@@ -37,4 +37,24 @@
 @endif
 </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type = "text/javascript">
+         $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             }
+         });
+         $('#myajax').click(function(){
+            $.ajax({
+               url:'buy',
+               data:{'app_id':{{ $app->id }}},
+               type:'post',
+               success:  function (response) {
+                  location.reload();
+               },
+            });
+             });
+       </script>
+
+
 @endsection
