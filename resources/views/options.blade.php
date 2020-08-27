@@ -38,7 +38,7 @@
   <div class="card-body">
     <h5 class="card-title">Mis aplicaciones</h5>
     <p class="card-text">Vea todas sus aplicaciones compradas.</p>
-    <a href="#" class="btn btn-primary">Acceder</a>
+    <a href="{{ route('myApps') }}" class="btn btn-primary">Acceder</a>
   </div>
 </div>
 </div>

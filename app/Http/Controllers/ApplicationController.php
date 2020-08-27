@@ -54,9 +54,18 @@ class ApplicationController extends Controller
     }
 
     public function myApps(){
-    	$user_id = \Auth::user()->id;
+        $user_id = \Auth::user()->id;
+        $user= App\User::where('id', $user_id)->get();
+        $user_role = $user[0]->role;
+        if($user_role == 'Cliente') {
+            $count = App\Purchase::where('user_id', $user_id)->count();
+            $apps = DB::table('purchases')->select(array('applications.*'))->join('applications', 'purchases.application_id', '=', 'applications.id')->where('purchases.user_id', $user_id)->get();
+            return view('myPurchases', ['apps' => $apps, 'count' => $count]);
+        }
+        else{
     	$apps = App\Application::where('user_id', $user_id)->get();
     	return view('myApps', compact('apps'));
+        }
     }
 
     public function application_detail($id){
@@ -193,9 +202,7 @@ class ApplicationController extends Controller
         }
         $count = App\Shopping_Cart::where('user_id', $user_id)->count();
         $apps = DB::table('shopping__carts')->select(array('applications.*'))->join('applications', 'shopping__carts.application_id', '=', 'applications.id')->where('shopping__carts.user_id', $user_id)->get();
-        return view('myShoppingCart', ['apps' => $apps, 'count' => $count]);
-
-
+        return view('myShoppingCart', ['apps' => $apps, 'count' => $count]);       
     }
 
     public function buy(Request $request){        //Compra la aplicacion recibida por ajax y la borra del carrito
@@ -207,6 +214,5 @@ class ApplicationController extends Controller
         DB::table('shopping__carts')->where('user_id', $user_id)->where('application_id', $request->app_id)->delete();
         echo('');
     }
-
 
 }
