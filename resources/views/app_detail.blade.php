@@ -40,18 +40,20 @@
       <br>
       <div class="text-center">
         @if($purchase == false && $saved_app == false)
-            <button id='myajax'>Agregar al Carrito</button>
+            <button id='myajax' class="btn btn-primary">Agregar al Carrito</button>
         @endif
         @if($saved_app == true)
-            <h3><strong>Ya agregaste esta aplicacion a tu Carrito</strong></h3>
+            <h3><strong>Ya agregaste esta aplicacion a tu Carrito</strong></h3><br>
+            <button id='myajax2' class="btn btn-danger">Quitar del Carrito</button>
+            <button id="myajax3" class="btn btn-primary">Comprar Aplicacion</button>
         @endif
         @if($purchase == true)
-            <h3><strong>Ya has comprado esta aplicacion</strong></h3>
+            <h3><strong>Ya has comprado esta aplicacion</strong></h3><br>
+            <button id="myajax4" class="btn btn-danger">Cancelar Compra</button>
         @endif
       </div>
     @endif
 </div>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type = "text/javascript">
          $.ajaxSetup({
              headers: {
@@ -63,6 +65,37 @@
                url:'api',
                data:{'app_id':{{ $app->id }}},
                type:'post',
+               success:  function (response) {
+                  location.reload();
+               },
+            });
+             });
+
+        $('#myajax3').click(function(){
+            $.ajax({
+               url:'buy',
+               data:{'app_id':{{ $app->id }}},
+               type:'post',
+               success:  function (response) {
+                  location.reload();
+               },
+            });
+             });
+
+        $('#myajax2').click(function(){
+            $.ajax({
+               url:'remove/{{$app->id}}',
+               type:'delete',
+               success:  function (response) {
+                  location.reload();
+               },
+            });
+             });
+
+        $('#myajax4').click(function(){
+            $.ajax({
+               url:'cancel/{{$app->id}}',
+               type:'delete',
                success:  function (response) {
                   location.reload();
                },

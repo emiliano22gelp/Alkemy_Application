@@ -59,12 +59,13 @@ class ApplicationController extends Controller
         $user_role = $user[0]->role;
         if($user_role == 'Cliente') {
             $count = App\Purchase::where('user_id', $user_id)->count();
-            $apps = DB::table('purchases')->select(array('applications.*'))->join('applications', 'purchases.application_id', '=', 'applications.id')->where('purchases.user_id', $user_id)->get();
+            $apps = DB::table('purchases')->select(array('applications.*', 'categories.name as category'))->join('applications', 'purchases.application_id', '=', 'applications.id')->join('categories', 'applications.category_id', '=', 'categories.id')->where('purchases.user_id', $user_id)->get();
             return view('myPurchases', ['apps' => $apps, 'count' => $count]);
         }
         else{
+        $count = App\Application::where('user_id', $user_id)->count();
     	$apps = App\Application::where('user_id', $user_id)->get();
-    	return view('myApps', compact('apps'));
+    	return view('myApps', compact('apps', 'count'));
         }
     }
 
@@ -201,7 +202,7 @@ class ApplicationController extends Controller
             return redirect()->route('index');
         }
         $count = App\Shopping_Cart::where('user_id', $user_id)->count();
-        $apps = DB::table('shopping__carts')->select(array('applications.*'))->join('applications', 'shopping__carts.application_id', '=', 'applications.id')->where('shopping__carts.user_id', $user_id)->get();
+        $apps = DB::table('shopping__carts')->select(array('applications.*', 'categories.name as category'))->join('applications', 'shopping__carts.application_id', '=', 'applications.id')->join('categories', 'applications.category_id', '=', 'categories.id')->where('shopping__carts.user_id', $user_id)->get();
         return view('myShoppingCart', ['apps' => $apps, 'count' => $count]);       
     }
 
@@ -213,6 +214,18 @@ class ApplicationController extends Controller
         $new_purchase->save();
         DB::table('shopping__carts')->where('user_id', $user_id)->where('application_id', $request->app_id)->delete();
         echo('');
+    }
+
+    public function remove_cart($id){    //elimina del carrito la aplicacion recibida por Ajax
+        $user_id = \Auth::user()->id;
+        DB::table('shopping__carts')->where('user_id', $user_id)->where('application_id', $id)->delete();
+        echo(''); 
+    }
+
+    public function cancel_cart($id){
+        $user_id = \Auth::user()->id;
+        DB::table('purchases')->where('user_id', $user_id)->where('application_id', $id)->delete();
+        echo ('');
     }
 
 }

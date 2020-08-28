@@ -7,6 +7,9 @@
       </div>
     @endif
 <br>
+@if($count == 0)
+  <h1>No tienes creada ninguna aplicacion</h1>
+@else
 <h1>Mis Applicaciones</h1>
 <br>
 <br>
@@ -38,5 +41,6 @@
   @endforeach  
   </tbody>
 </table>
+@endif
 
 @endsection

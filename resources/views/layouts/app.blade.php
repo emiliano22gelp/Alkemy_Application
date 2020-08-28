@@ -86,6 +86,7 @@
       <p class="lead">Aplicacion web desarrollada con Laravel solicitada por ALKEMY LABS</p>
     </div>
   </header>
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
   <section id="about">
     <div class="container">
@@ -115,7 +116,7 @@
 
   <!-- Bootstrap core JavaScript -->
  <!-- <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>-->
- <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+ <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>-->
 
   <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 

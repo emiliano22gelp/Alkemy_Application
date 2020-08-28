@@ -47,7 +47,7 @@
 <div class="card text-center mb-3" style="width: 20rem;">
   <div class="card-body">
     <h5 class="card-title">Ver mi Carrito</h5>
-    <p class="card-text">Vea las aplicaciones que ha guardado en su carrito; comprelas o borrelas del mismo.</p>
+    <p class="card-text">Vea las aplicaciones que ha guardado en su carrito</p>
     <a href="{{ route('myShoppingCart') }}" class="btn btn-primary">Acceder</a>
   </div>
 </div>

@@ -19,7 +19,8 @@
     <tr>
       <th scope="col">Nombre de la Aplicacion</th>
       <th scope="col">Imagen/Logo</th>
-      <th scope="col">Opciones</th>
+      <th scope="col">Precio</th>
+      <th scope="col">Categoria</th>
     </tr>
   </thead>
   <tbody>
@@ -27,33 +28,13 @@
     <tr>
       <th scope="row">{{$app->name}}</th>
       <td><img src="{{asset("css/$app->image")}}" width="60" height="40" /></td>
-      <td>
-        <button id='myajax' class="btn btn-primary">Comprar Aplicacion</button>
-        <button id='myajax2' class="btn btn-danger">Quitar de mi Carrito</button>
+      <th scope="row">{{$app->price}}</th>
+      <th scope="row">{{ $app->category }}</th>
     </tr>
   @endforeach  
   </tbody>
 </table>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script type = "text/javascript">
-         $.ajaxSetup({
-             headers: {
-                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-             }
-         });
-         $('#myajax').click(function(){
-            $.ajax({
-               url:'buy',
-               data:{'app_id':{{ $app->id }}},
-               type:'post',
-               success:  function (response) {
-                  location.reload();
-               },
-            });
-             });
-       </script>
 
 @endif
 

@@ -44,9 +44,21 @@ Route::get('/me/app/api', function(){   //controla que el cliente no ingrese a l
 
 Route::get('/me/myShoppingCart', 'ApplicationController@myShoppingCart')->name('myShoppingCart');
 
-Route::post('/me/buy', 'ApplicationController@buy');     // API llamada por ajax para comprar una aplicacion almacenada en el carrito
+Route::post('/me/app/buy', 'ApplicationController@buy');     // API llamada por ajax para comprar una aplicacion almacenada en el carrito
 
-Route::get('/me/buy', function(){     //controla que el cliente no ingrese a la API anterior por GET cuando en realidad es por POST                 
+Route::get('/me/app/buy', function(){     //controla que el cliente no ingrese a la API anterior por GET cuando en realidad es por POST                 
+	return redirect()->route('index');
+});
+
+Route::delete('me/app/remove/{id}', 'ApplicationController@remove_cart'); //API llamada por ajax para eliminar una aplicacion del carrito del usuario logueado
+
+Route::get('me/app/remove/{id}', function(){  //controla que el cliente no ingrese a la API anterior por GET cuando en realidad es por DELETE
+	return redirect()->route('index');
+});
+
+Route::delete('me/app/cancel/{id}', 'ApplicationController@cancel_cart'); //API llamada por ajax para cancelar la compra de una aplicacion del usuario logueado
+
+Route::get('me/app/cancel/{id}', function(){  //controla que el cliente no ingrese a la API anterior por GET cuando en realidad es por DELETE
 	return redirect()->route('index');
 });
 
