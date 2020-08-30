@@ -36,6 +36,7 @@
   </div>
   </div>
   <input type="hidden" name="application_id" id="app_id" value="{{ $app->id }}">
+  @auth
     @if($user_role == 'Cliente')
       <br>
       <div class="text-center">
@@ -53,6 +54,7 @@
         @endif
       </div>
     @endif
+  @endauth
 </div>
 <script type = "text/javascript">
          $.ajaxSetup({

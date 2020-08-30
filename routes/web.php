@@ -62,7 +62,11 @@ Route::get('me/app/cancel/{id}', function(){  //controla que el cliente no ingre
 	return redirect()->route('index');
 });
 
+Route::get('/visitCategories', 'VisitApplicationController@visitCategories')->name('visitCategories');
 
+Route::get('/visitApps/{id}', 'VisitApplicationController@visitApps')->name('visitApps');
+
+Route::get('/visitDetailApp/{id}', 'VisitApplicationController@visit_Detail_App')->name('visitDetailApp');
 
 Auth::routes();
 

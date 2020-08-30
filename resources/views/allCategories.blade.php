@@ -20,7 +20,12 @@
       <th scope="row">{{ $category->name }}</th>
       <th scope="row">{{ $category->umount }}</th>
       <td>
+      @auth
         <a href="{{ route('apps', $category->id) }}" class="btn btn-primary btn-sm">Ver Aplicaciones</a>
+      @endauth
+      @guest
+        <a href="{{ route('visitApps', $category->id) }}" class="btn btn-primary btn-sm">Ver Aplicaciones</a>
+      @endguest
       </td>
     </tr>
   @endforeach  

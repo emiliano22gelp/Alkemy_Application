@@ -5,6 +5,9 @@
 <div class="jumbotron jumbotron-fluid" style="margin-left: -150px;margin-right: -150px;background-color:#D4AE5E">
   <div class="container">
     <p class="lead"><h3  class="text-center"> <strong>Pagina de Inicio</strong></h3></p>
+    <p class="text-center">
+      <a class="btn btn-primary btn-lg" href="{{ route('visitCategories') }}" role="button">Explorar</a>
+    </p>
   </div>
 </div>
 <br>
