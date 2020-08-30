@@ -41,6 +41,7 @@
   @endforeach  
   </tbody>
 </table>
+{{$apps->links()}}
 @endif
 
 @endsection

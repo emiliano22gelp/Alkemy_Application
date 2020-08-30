@@ -15,7 +15,7 @@ class VisitApplicationController extends Controller
             return redirect()->route('index');
         }
         else{
-            $categories = DB::table('applications')->select(array('categories.*', DB::raw('COUNT(applications.category_id) as umount')))->rightJoin('categories', 'category_id', '=', 'categories.id')->groupBy('categories.id')->get();
+            $categories = DB::table('applications')->select(array('categories.*', DB::raw('COUNT(applications.category_id) as umount')))->rightJoin('categories', 'category_id', '=', 'categories.id')->groupBy('categories.id')->orderBy('categories.name')->get();
             return view('allCategories', ['categories' => $categories]);
         }   
    }
@@ -28,7 +28,7 @@ class VisitApplicationController extends Controller
             $category = App\Category::findOrFail($id); // para verificar que la categoria recibida realmente exista
             $category_name = $category->name;
             $count = App\Application::where('category_id', $id)->count();
-            $apps = App\Application::where('category_id', $id)->get();
+            $apps = App\Application::where('category_id', $id)->orderBy('created_at', 'desc')->paginate(10);
             return view('category_app', compact('category_name', 'count', 'apps'));
        }
    }
